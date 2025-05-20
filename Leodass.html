@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dass & co</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕴️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --batman-dark: #0f0f12;
+            --batman-black: #050506;
+            --batman-yellow: #f0c808;
+            --batman-gray: #2b2b35;
+            --batman-light: #e8e8e8;
+            --batman-blue: #0067a0;
+            --batman-red: #d62828;
+            --success: #4bb543;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--batman-dark);
+            color: var(--batman-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(15, 15, 18, 0.8) 0%, rgba(15, 15, 18, 0.9) 90%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50 0 L100 50 L50 100 L0 50 Z" fill="none" stroke="%232b2b35" stroke-width="0.5"/></svg>');
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 3px solid var(--batman-yellow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--batman-yellow), transparent);
+        }
+
+        h1 {
+            color: var(--batman-yellow);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(240, 200, 8, 0.3);
+        }
+
+        .subtitle {
+            color: var(--batman-light);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .bat-signal {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 L20 50 L35 50 L35 90 L65 90 L65 50 L80 50 Z" fill="%23f0c808"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: drop-shadow(0 0 8px rgba(240, 200, 8, 0.5));
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .dialogue {
+            background-color: var(--batman-black);
+            border-left: 4px solid var(--batman-yellow);
+            padding: 1rem;
+            margin: 1rem auto;
+            max-width: 800px;
+            font-style: italic;
+            position: relative;
+        }
+
+        .dialogue::before {
+            content: "“";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 4rem;
+            color: var(--batman-yellow);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .dialogue::after {
+            content: "”";
+            position: absolute;
+            bottom: -30px;
+            right: 10px;
+            font-size: 4rem;
+            color: var(--batman-yellow);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .snippet-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .snippet-card {
+            background-color: var(--batman-gray);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 2px solid var(--batman-yellow);
+        }
+
+        .snippet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        .card-header {
+            background-color: var(--batman-black);
+            color: var(--batman-yellow);
+            padding: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--batman-blue);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .card-number {
+            background-color: var(--batman-yellow);
+            color: var(--batman-black);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            flex-grow: 1;
+        }
+
+        .copy-btn {
+            background-color: var(--batman-yellow);
+            color: var(--batman-black);
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--batman-light);
+            transform: translateY(-1px);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--batman-light);
+            background-color: var(--batman-black);
+            padding: 1rem;
+            border-radius: 3px;
+            overflow-x: auto;
+            border-left: 3px solid var(--batman-blue);
+        }
+
+        .language-tag {
+            display: inline-block;
+            background-color: var(--batman-blue);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--batman-blue);
+            color: var(--batman-light);
+            font-size: 0.9rem;
+        }
+
+        .bat-logo {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 L20 50 L35 50 L35 90 L65 90 L65 50 L80 50 Z" fill="%23f0c808"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 1200px) {
+            .snippet-container {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .snippet-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .snippet-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .bat-signal {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to Dass & co 🕴️🦇 </h1>
+            <p class="subtitle">Enna dude Bit adika vandhurukingala ? juz copy & paste  </p>
+            <p class="subtitle">please be sure to remove comment lines</p>
+            <div class="dialogue">
+                "Why do we fall, sir? So that we can learn to pick ourselves up."
+            </div>
+        </header>
+
+        <div class="snippet-container">
+            <!-- Snippet 1 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">1</div>
+                    <div class="card-title">Python Arithmetic Operations</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code1')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">Python</span>
+                    <pre id="code1">def perform_operations():
+    try:
+        num1 = float(input("Enter the first number: "))
+        num2 = float(input("Enter the second number: "))
+        print(f"Sum: {num1 + num2}")
+        print(f"Difference: {num1 - num2}")
+        print(f"Product: {num1 * num2}")
+        if num2 != 0:
+            print(f"Quotient: {num1 / num2}")
+        else:
+            print("Error: Division by zero is not allowed.")
+    except ValueError:
+        print("Error: Invalid input. Please enter numeric values.")
+
+perform_operations()</pre>
+                </div>
+            </div>
+
+            <!-- Snippet 2 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">2</div>
+                    <div class="card-title">Calculate Average Grades</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code2')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">Python</span>
+                    <pre id="code2">def calculate_average():
+    students = {}
+    while True:
+        name = input("Enter student's name (or 'exit' to stop): ")
+        if name.lower() == 'exit':
+            break
+
+        try:
+            grade = float(input(f"Enter grade for {name}: "))
+            students[name] = grade
+        except ValueError:
+            print("Invalid input. Please enter a numeric grade.")
+            continue
+
+    avg_grade = sum(students.values()) / len(students) if students else 0
+    print(f"Average grade: {avg_grade:.2f}")
+
+calculate_average()</pre>
+                </div>
+            </div>
+
+            <!-- Snippet 3 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">3</div>
+                    <div class="card-title">Flask Personalized Greeting</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code3')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">Python/Flask</span>
+                    <pre id="code3">from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    if request.method == 'POST':
+        name = request.form['name']
+        color = request.form['color']
+        return f'Hello {name}, your favorite color is {color}!'
+
+    return render_template_string('''
+        &lt;form method="POST"&gt;
+            Name: &lt;input type="text" name="name"&gt;&lt;br&gt;
+            Favorite Color: &lt;input type="text" name="color"&gt;&lt;br&gt;
+            &lt;input type="submit" value="Submit"&gt;
+        &lt;/form&gt;
+    ''')
+
+if __name__ == '__main__':
+    app.run(debug=True)</pre>
+                </div>
+            </div>
+
+            <!-- Snippet 4 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">4</div>
+                    <div class="card-title">PHP Factorial Calculator</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code4')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">PHP</span>
+                    <pre id="code4">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Factorial Calculator&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;Factorial Calculator&lt;/h2&gt;
+    &lt;form method="post"&gt;
+        Enter a number: &lt;input type="number" name="num" required&gt;
+        &lt;input type="submit" value="Calculate"&gt;
+    &lt;/form&gt;
+
+    &lt;?php
+    function factorial($n) {
+        if ($n &lt; 0) {
+            return "Factorial is not defined for negative numbers.";
+        }
+        $fact = 1;
+        for ($i = 1; $i &lt;= $n; $i++) {
+            $fact *= $i;
+        }
+        return $fact;
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $num = intval($_POST["num"]);
+        echo "&lt;h3&gt;Factorial of $num is " . factorial($num) . "&lt;/h3&gt;";
+    }
+    ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                </div>
+            </div>
+
+            <!-- Snippet 5 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">5</div>
+                    <div class="card-title">Node.js GET Server</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code5')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">Node.js</span>
+                    <pre id="code5">const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Route to handle any GET request
+app.get('*', (req, res) => {
+  res.send('Hello, World!');
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});</pre>
+                </div>
+            </div>
+
+            <!-- Snippet 6 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">6</div>
+                    <div class="card-title">Flask Login Auth</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code6')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">Python/Flask</span>
+                    <pre id="code6">from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+users = {'admin': 'password123'}
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if users.get(username) == password:
+            return 'Login successful!'
+        else:
+            return 'Invalid credentials.'
+
+    return render_template_string('''
+        &lt;form method="POST"&gt;
+            Username: &lt;input type="text" name="username"&gt;&lt;br&gt;
+            Password: &lt;input type="password" name="password"&gt;&lt;br&gt;
+            &lt;input type="submit" value="Login"&gt;
+        &lt;/form&gt;
+    ''')
+
+if __name__ == '__main__':
+    app.run(debug=True)</pre>
+                </div>
+            </div>
+
+            <!-- Snippet 7 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">7</div>
+                    <div class="card-title">PHP String Reverser</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code7')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">PHP</span>
+                    <pre id="code7">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;String Handling Operations&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;String Handling Operations&lt;/h2&gt;
+    &lt;form method="post"&gt;
+        Enter a string: &lt;input type="text" name="string" required&gt;&lt;br&gt;&lt;br&gt;
+        &lt;select name="operation"&gt;
+            &lt;option value="reverse"&gt;Reverse the string&lt;/option&gt;
+            &lt;option value="uppercase"&gt;Convert to uppercase&lt;/option&gt;
+            &lt;option value="lowercase"&gt;Convert to lowercase&lt;/option&gt;
+            &lt;option value="length"&gt;Find string length&lt;/option&gt;
+            &lt;option value="palindrome"&gt;Check if palindrome&lt;/option&gt;
+        &lt;/select&gt;&lt;br&gt;&lt;br&gt;
+        &lt;input type="submit" value="Perform Operation"&gt;
+    &lt;/form&gt;
+
+    &lt;?php
+    function isPalindrome($str) {
+        $reversed = strrev($str);
+        return strtolower($str) == strtolower($reversed);
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $string = $_POST["string"];
+        $operation = $_POST["operation"];
+        echo "&lt;h3&gt;Result:&lt;/h3&gt;";
+
+        switch ($operation) {
+            case "reverse":
+                echo "Reversed string: " . strrev($string);
+                break;
+            case "uppercase":
+                echo "Uppercase string: " . strtoupper($string);
+                break;
+            case "lowercase":
+                echo "Lowercase string: " . strtolower($string);
+                break;
+            case "length":
+                echo "Length of the string: " . strlen($string);
+                break;
+            case "palindrome":
+                echo isPalindrome($string) ? "The string is a palindrome." : "The string is not a palindrome.";
+                break;
+            default:
+                echo "Invalid operation.";
+        }
+    }
+    ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                </div>
+            </div>
+
+            <!-- Snippet 8 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">8</div>
+                    <div class="card-title">Node.js POST Handler</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code8')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">Node.js</span>
+                    <pre id="code8">const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Middleware to parse incoming JSON data
+app.use(express.json());
+
+app.post('/', (req, res) => {
+  const postData = req.body; // Get data from the request body
+  res.json(postData); // Respond with the same data
+  console.log("message received ",postData)
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});</pre>
+                </div>
+            </div>
+
+            <!-- Snippet 9 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">9</div>
+                    <div class="card-title">Node.js 404 Simulator</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code9')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">Node.js</span>
+                    <pre id="code9">const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Route to handle GET request to /hello
+app.get('/hello', (req, res) => {
+  res.send('Hello, World!');
+});
+
+// Fallback route for anything else (404)
+app.use((req, res) => {
+  res.status(404).send('404 Not Found - The requested resource does not exist.');
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});</pre>
+                </div>
+            </div>
+
+            <!-- Snippet 10 -->
+            <div class="snippet-card">
+                <div class="card-header">
+                    <div class="card-number">10</div>
+                    <div class="card-title">Flask Multi-Page App</div>
+                    <button class="copy-btn" onclick="copyCode(this, 'code10')">Copy</button>
+                </div>
+                <div class="card-content">
+                    <span class="language-tag">Python/Flask</span>
+                    <pre id="code10">from flask import Flask, render_template_string
+import random
+
+app = Flask(__name__)
+
+quotes = [
+    "The best way to predict the future is to invent it.",
+    "Life is 10% what happens to us and 90% how we react to it.",
+    "You miss 100% of the shots you don't take."
+]
+
+@app.route('/')
+def welcome():
+    return render_template_string('''
+        &lt;h1&gt;Welcome to My Flask App!&lt;/h1&gt;
+        &lt;a href="/quote"&gt;Go to the Quote Page&lt;/a&gt;
+    ''')
+
+@app.route('/quote')
+def show_quote():
+    quote = random.choice(quotes)
+    return render_template_string(f'''
+        &lt;h1&gt;Random Quote:&lt;/h1&gt;
+        &lt;p&gt;"{quote}"&lt;/p&gt;
+        &lt;a href="/"&gt;Back to Home Page&lt;/a&gt;
+    ''')
+
+if __name__ == '__main__':
+    app.run(debug=True)</pre>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="bat-logo"></div>
+            <p> Dass & co &copy; 2089 | ""It's only after we've lost everything that we're free to do anything."🕴️🦇"</p>
+        </footer>
+    </div>
+
+    <script>
+        function copyCode(button, elementId) {
+            const codeElement = document.getElementById(elementId);
+            const range = document.createRange();
+            range.selectNode(codeElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    button.classList.add('copied');
+                    button.textContent = 'Copied to Batcomputer!';
+                    setTimeout(() => {
+                        button.classList.remove('copied');
+                        button.textContent = 'Copy';
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Unable to copy', err);
+            }
+            
+            window.getSelection().removeAllRanges();
+        }
+    </script>
+</body>
+</html>
