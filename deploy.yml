@@ -4,7 +4,27 @@
   become: yes
 
   tasks:
-    - name: Copy HTML files to web server
+    - name: Ensure Apache is installed
+      ansible.builtin.package:
+        name: apache2
+        state: present
+
+    - name: Ensure Apache is enabled and running
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Ensure web root exists
+      ansible.builtin.file:
+        path: /var/www/html
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    # Copy common static files
+    - name: Copy HTML/CSS/JS files
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: /var/www/html/
@@ -14,21 +34,3 @@
       with_fileglob:
         - "*.html"
         - "*.css"
-        - "*.js"
-
-    - name: Copy image files to web server
-      ansible.builtin.copy:
-        src: "{{ item }}"
-        dest: /var/www/html/
-        owner: www-data
-        group: www-data
-        mode: '0644'
-      with_fileglob:
-        - "*.jpg"
-        - "*.png"
-        - "*.gif"
-
-    - name: Restart Apache
-      ansible.builtin.service:
-        name: apache2
-        state: restarted
