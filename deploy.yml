@@ -1,4 +1,3 @@
----
 - name: Deploy static website to web servers
   hosts: webservers
   become: yes
